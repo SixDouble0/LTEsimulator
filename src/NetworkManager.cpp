@@ -106,5 +106,5 @@ const User* NetworkManager::GetUserById(int userId) const {
             return &user;
         }
     }
-    return nullptr; // Zwróæ nullptr, jeœli u¿ytkownik o podanym ID nie istnieje
+    return nullptr; 
 }
