@@ -1,14 +1,20 @@
 #pragma once
+#include <vector>
 
 class Cell {
+public:
+    Cell(int pos_x, int pos_y, int cell_id, int radius, const std::vector<std::vector<int>>& grid);
+    const std::vector<int>& GetUserList() const;
+    int getId() const;
+    int getX() const;
+    int getY() const;
+    int getRadius() const;
 
-public :
-	Cell(int pos_x, int pos_y, int cell_id, int radius);
+    // Dodaj publiczne metody do modyfikacji listy u¿ytkowników
+    void AddUser(int userId);
+    void RemoveUser(int userId);
 
-private :
-
-	int x; // X coordinate of the cell
-	int y; // Y coordinate of the cell
-	int id; // Unique identifier for the cell
-	int r; // Radius of the cell coverage area
+private:
+    std::vector<int> List; // Lista u¿ytkowników pod³¹czonych do tej komórki
+    int x, y, id, r;
 };
