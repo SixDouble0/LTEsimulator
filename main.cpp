@@ -1,16 +1,14 @@
 ﻿#include <iostream>
 #include "src/include/AllHeaders.hpp"
-
+#include <thread> 
+#include <chrono> 
 int main() {
-    // Inicjalizacja sieci (np. 10x10)
     NetworkManager::Init(10, 10);
     auto& manager = NetworkManager::Get();
 
-    // Dodaj przykładowe komórki
     manager.PlaceCell(2, 2, 1, 2);
     manager.PlaceCell(7, 7, 2, 3);
 
-    // Dodaj przykładowych użytkowników
     manager.AddUser(3, 2, 7);
     manager.AddUser(2, 3, 8);
     manager.AddUser(7, 8, 9);
@@ -43,6 +41,26 @@ int main() {
         std::cout << "Wrong cell number!" << std::endl;
     }
 
+    Scheduler scheduler;
+    int round = 0;
+    while (true) {
+        for (auto& user : manager.GetUsers()) {
+            int dx = rand() % 3 - 1; // -1, 0, 1
+            int dy = rand() % 3 - 1;
+            user.move(dx, dy);
+            manager.HandleHandover(user);
+        }
 
+        for (const auto& cell : manager.GetCells()) {
+            const auto& userIds = cell.GetUserList();
+            auto allocated = scheduler.AllocateResources(userIds);
+            for (int userId : allocated) {
+                std::cout << "Round " << round << ": packet for user " << userId
+                    << " in cell " << cell.getId() << std::endl;
+            }
+        }
+        ++round;
+        std::this_thread::sleep_for(std::chrono::seconds(1)); // 1 second delay
+    }
 return 0;
 }

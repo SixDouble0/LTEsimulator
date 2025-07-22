@@ -7,6 +7,10 @@ public:
     int getId() const;
     int getX() const;
     int getY() const;
+    int getConnectedCellId() const;
+    void setConnectedCellId(int cellId);
+
+    void move(int dx, int dy);
 
 private:
     int x, y;
