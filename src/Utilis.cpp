@@ -1,22 +1,28 @@
 #include "include/Utilis.hpp"
 #include <queue>
 #include <utility>
+#include <vector>
+#include <cmath>
 
-int FindNearestCellBFS(const std::vector<std::vector<int>>& grid, int user_x, int user_y) {
+std::vector<int> FindNearestUserBFS(const std::vector<std::vector<int>>& grid, int cell_x, int cell_y, int radius) {
     int grid_height = grid.size();
     int grid_width = grid[0].size();
     std::vector<std::vector<bool>> visited(grid_height, std::vector<bool>(grid_width, false));
     std::queue<std::pair<int, int>> q;
-    q.push({ user_x, user_y });
-    visited[user_x][user_y] = true;
+    std::vector<int> foundUsers;
+
+    q.push({ cell_x, cell_y });
+    visited[cell_x][cell_y] = true;
 
     while (!q.empty()) {
         auto [x, y] = q.front();
         q.pop();
 
-        // Komórka: cellId > 0 i nie jest userId
-        if (grid[x][y] > 0 && !(x == user_x && y == user_y)) {
-            return grid[x][y];
+        int dist = std::abs(x - cell_x) + std::abs(y - cell_y);
+        if (dist > radius) continue;
+
+        if (grid[x][y] > 0) {
+            foundUsers.push_back(grid[x][y]);
         }
 
         const int dx[] = { 1, -1, 0, 0 };
@@ -30,5 +36,5 @@ int FindNearestCellBFS(const std::vector<std::vector<int>>& grid, int user_x, in
             }
         }
     }
-    return -1; // Nie znaleziono komórki
+    return foundUsers;
 }

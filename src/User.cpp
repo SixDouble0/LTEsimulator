@@ -1,9 +1,17 @@
 #include "include/User.hpp"
-#include "include/NetworkManager.hpp"
 
-User::User(int pos_y, int pos_x, int user_id)
-    : y(pos_y), x(pos_x), id(user_id) {
+User::User(int pos_x, int pos_y, int user_id)
+    : x(pos_x), y(pos_y), id(user_id), connectedCellId(-1) {
+}
 
-    NetworkManager::Get().PlaceUser(pos_x, pos_y, user_id);
- 
+int User::getId() const {
+    return id;
+}
+
+int User::getX() const {
+    return x;
+}
+
+int User::getY() const {
+    return y;
 }

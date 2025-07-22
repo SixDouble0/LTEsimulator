@@ -1,4 +1,4 @@
 #pragma once
 #include <vector>
 
-int FindNearestCellBFS(const std::vector<std::vector<int>>& grid, int user_x, int user_y);
+std::vector<int> FindNearestUserBFS(const std::vector<std::vector<int>>& grid, int cell_x, int cell_y, int radius);

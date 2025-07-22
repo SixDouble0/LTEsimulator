@@ -1,14 +1,13 @@
 #pragma once
+#include <vector>
 
 class Cell {
+public:
+    Cell(int pos_x, int pos_y, int cell_id, int radius, const std::vector<std::vector<int>>& grid);
+    const std::vector<int>& GetUserList() const;
+    int getId() const;
 
-public :
-	Cell(int pos_x, int pos_y, int cell_id, int radius);
-
-private :
-
-	int x; // X coordinate of the cell
-	int y; // Y coordinate of the cell
-	int id; // Unique identifier for the cell
-	int r; // Radius of the cell coverage area
+private:
+    std::vector<int> List; // List of users connected to this cell
+    int x, y, id, r;
 };
